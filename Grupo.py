@@ -1,6 +1,6 @@
-
 # importamos las bibliotecas necesarias
-from tkinter import * 
+# 
+# +from tkinter import * 
 from tkinter import ttk
 
 # FUNCIONES 
@@ -91,6 +91,29 @@ trvGrilla.column("#2",width=80, anchor=CENTER)
 trvGrilla.column("#3",width=80,anchor=CENTER)
 trvGrilla.column("#3",width=80,anchor=CENTER)
 
+#sumar total
+# Función para calcular el total de los subtotales
+def actualizarTotal():
+    total = 0
+    for item in trvGrilla.get_children():
+        subtotal = float(trvGrilla.item(item, 'values')[3])
+        total += subtotal
+    
+    entTotal.delete(0, END)
+    entTotal.insert(0, str(total))
+
+# Modifica la función `insertarElemento` para incluir la actualización del total
+def insertarElemento():
+    producto = entProducto.get()
+    descripcion = entDescripcion.get()
+    cantidad = float(entCantidad.get())
+    precio = float(entPrecioUnitario.get())
+    subtotal = cantidad * precio
+    
+    trvGrilla.insert("", END, text=producto, values=(descripcion, cantidad, precio, subtotal))
+    
+    # Actualizar el total después de insertar el elemento
+    actualizarTotal()
 
 # creamos los botones
 btnAgregar=Button(ventana, text="Agregar", width=12, command=insertarElemento)
